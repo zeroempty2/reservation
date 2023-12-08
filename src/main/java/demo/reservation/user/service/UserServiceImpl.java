@@ -1,6 +1,6 @@
 package demo.reservation.user.service;
 
-import demo.reservation.common.dto.StatusResponseDto;
+
 import demo.reservation.user.dao.UserRepository;
 import demo.reservation.user.dto.UserLoginRequestDto;
 import demo.reservation.user.dto.UserSignUpRequestDto;
@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,8 @@ public class UserServiceImpl implements UserService {
   private final JwtUtil jwtUtil;
   private final PasswordEncoder passwordEncoder;
   @Override
-  public StatusResponseDto signUp(UserSignUpRequestDto signUpRequestDto) {
+  @Transactional
+  public void signUp(UserSignUpRequestDto signUpRequestDto) {
     String password =  passwordEncoder.encode(signUpRequestDto.password());
     User user = User.builder()
         .username(signUpRequestDto.username())
@@ -27,11 +29,11 @@ public class UserServiceImpl implements UserService {
         .accountName(signUpRequestDto.accountName())
         .build();
     userRepository.save(user);
-    return new StatusResponseDto(201,"Created");
   }
 
   @Override
-  public StatusResponseDto login(UserLoginRequestDto request, HttpServletResponse response) {
+  @Transactional
+  public void login(UserLoginRequestDto request, HttpServletResponse response) {
     String username = request.username();
     String password = request.password();
 
@@ -44,13 +46,20 @@ public class UserServiceImpl implements UserService {
     // token 발급
     String accessToken = jwtUtil.createAccessToken(user.getUsername(), user.getRole());
     response.addHeader(JwtUtil.AUTHORIZATION_HEADER, accessToken);
-
-    return new StatusResponseDto(200,"OK");
   }
 
   @Override
+  @Transactional
   public User findByUsername(String username) {
     return userRepository.findByUsername(username).orElseThrow(
+        () -> new IllegalArgumentException("존재하지 않는 정보입니다")
+    );
+  }
+
+  @Override
+  @Transactional
+  public User findById(Long userId) {
+    return userRepository.findById(userId).orElseThrow(
         () -> new IllegalArgumentException("존재하지 않는 정보입니다")
     );
   }

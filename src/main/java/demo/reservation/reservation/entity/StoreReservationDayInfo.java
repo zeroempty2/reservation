@@ -1,4 +1,4 @@
-package demo.reservation.store.entity;
+package demo.reservation.reservation.entity;
 
 import demo.reservation.util.TimeStamped;
 import jakarta.persistence.Column;
@@ -28,6 +28,14 @@ public class StoreReservationDayInfo extends TimeStamped {
 
   @Column
   private Integer capacity;
+
+  //메서드
+  public void updateStoreReservationDayInfo(){
+    this.capacity -= 1;
+    if(capacity < 1){
+      this.isPossible = false;
+    }
+  }
 
 //연관관계
   @ManyToOne(fetch = FetchType.LAZY)

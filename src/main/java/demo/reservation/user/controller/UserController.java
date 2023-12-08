@@ -1,14 +1,14 @@
 package demo.reservation.user.controller;
 
+import static demo.reservation.util.HttpResponse.RESPONSE_CREATED;
+import static demo.reservation.util.HttpResponse.RESPONSE_OK;
+
 import demo.reservation.common.dto.StatusResponseDto;
 import demo.reservation.user.dto.UserLoginRequestDto;
 import demo.reservation.user.dto.UserSignUpRequestDto;
 import demo.reservation.user.service.interfaces.UserService;
 import jakarta.servlet.http.HttpServletResponse;
-import java.nio.charset.StandardCharsets;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,17 +23,13 @@ public class UserController {
 
   @PostMapping("/signUp")
   public ResponseEntity<StatusResponseDto>  signUp(@RequestBody UserSignUpRequestDto userRequestDto){
-    StatusResponseDto statusResponseDto = userService.signUp(userRequestDto);
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
-    return ResponseEntity.ok().headers(headers).body(statusResponseDto);
+    userService.signUp(userRequestDto);
+    return RESPONSE_CREATED;
   }
 
   @PostMapping("/login")
   public ResponseEntity<StatusResponseDto> login(@RequestBody UserLoginRequestDto loginRequestDto, HttpServletResponse response) {
-    StatusResponseDto statusResponseDto = userService.login(loginRequestDto,response);
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
-    return ResponseEntity.ok().headers(headers).body(statusResponseDto);
+    userService.login(loginRequestDto,response);
+    return RESPONSE_OK;
   }
 }

@@ -1,5 +1,7 @@
 package demo.reservation.reservation.service.interfaces;
 
-public interface UserReservationService {
+import demo.reservation.reservation.dto.RequestReservationDto;
 
+public interface UserReservationService {
+  boolean requestReservation(RequestReservationDto requestReservationDto);
 }

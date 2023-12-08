@@ -1,5 +1,6 @@
 package demo.reservation.store.entity;
 
+import demo.reservation.reservation.entity.StoreReservationInfo;
 import demo.reservation.util.TimeStamped;
 import demo.reservation.util.enums.ReservationPolicy;
 import jakarta.persistence.CascadeType;
@@ -26,7 +27,7 @@ public class Store extends TimeStamped {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
+  @Column(nullable = false)
   private ReservationPolicy reservationPolicy;
 
   @Embedded
@@ -34,13 +35,17 @@ public class Store extends TimeStamped {
 
   //생성자
   @Builder
-  public Store(ReservationPolicy reservationPolicy){
+  public Store(ReservationPolicy reservationPolicy,StoreDesignatedDateInfo storeDesignatedDateInfo){
     this.reservationPolicy = reservationPolicy;
+    this.storeDesignatedDateInfo = storeDesignatedDateInfo;
   }
-
   //메서드
   public void updateStoreReservationPolicy(ReservationPolicy reservationPolicy){
     this.reservationPolicy = reservationPolicy;
+  }
+
+  public void updateStoreDesignatedDateInfo(StoreDesignatedDateInfo storeDesignatedDateInfo){
+    this.storeDesignatedDateInfo = storeDesignatedDateInfo;
   }
 
   //연관관계

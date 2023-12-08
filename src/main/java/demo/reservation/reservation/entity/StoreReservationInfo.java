@@ -1,5 +1,6 @@
-package demo.reservation.store.entity;
+package demo.reservation.reservation.entity;
 
+import demo.reservation.store.entity.Store;
 import demo.reservation.util.TimeStamped;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -34,8 +35,6 @@ public class StoreReservationInfo extends TimeStamped {
   @Column
   private Byte day;
 
-  @Column
-  private Boolean isPossible;
 //연관관계
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "store_id")

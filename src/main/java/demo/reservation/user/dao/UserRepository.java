@@ -8,4 +8,5 @@ import org.springframework.data.repository.Repository;
 public interface UserRepository extends Repository<User,Long> {
  void save(User user);
  Optional<User> findByUsername(String username);
+ Optional<User> findById(Long Id);
 }

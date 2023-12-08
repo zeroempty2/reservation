@@ -27,8 +27,9 @@ public class UserReservation {
 
   //생성자
   @Builder
-  public UserReservation(ReservationStatus reservationStatus){
+  public UserReservation(ReservationStatus reservationStatus,User user){
     this.reservationStatus = reservationStatus;
+    this.user = user;
   }
 
   //메서드
