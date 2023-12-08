@@ -15,4 +15,7 @@ public class HttpResponse {
   public static final ResponseEntity<StatusResponseDto> RESPONSE_DELETE = ResponseEntity.status(
       HttpStatus.NO_CONTENT).build();
 
+  public static final ResponseEntity<StatusResponseDto> BAD_REQUEST = ResponseEntity.status(
+      HttpStatus.BAD_REQUEST).build();
+
 }
