@@ -32,8 +32,6 @@ public class StoreReservationInfo extends TimeStamped {
   @Column
   private Byte month;
 
-  @Column
-  private Byte day;
 
 //연관관계
   @ManyToOne(fetch = FetchType.LAZY)

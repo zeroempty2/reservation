@@ -25,11 +25,10 @@ public class UserReservationServiceImpl implements UserReservationService {
 
   @Override
   @Transactional
-  public boolean requestReservation(RequestReservationDto requestReservationDto, Long userId,
-      Long storeReservationInfoId) {
+  public boolean requestReservation(Long userId, Long storeReservationDayInfoId) {
     User user = userService.findById(userId);
 
-    StoreReservationDayInfo storeReservationDayInfo = storeReservationService.findStoreReservationDayInfoByStoreReservationInfoIdAndTime(storeReservationInfoId,requestReservationDto.time());
+    StoreReservationDayInfo storeReservationDayInfo = storeReservationService.findStoreReservationDayInfoById(storeReservationDayInfoId);
 
     if(!storeReservationDayInfo.getIsPossible()) return false;
 

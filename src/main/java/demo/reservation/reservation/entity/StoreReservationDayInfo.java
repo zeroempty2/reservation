@@ -21,6 +21,9 @@ public class StoreReservationDayInfo extends TimeStamped {
   private Long id;
 
   @Column
+  private Byte day;
+
+  @Column
   private String time;
 
   @Column
