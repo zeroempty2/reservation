@@ -34,7 +34,7 @@ public class StoreReservationServiceImpl implements StoreReservationService {
 
   @Override
   public StoreReservationDayInfo findStoreReservationDayInfoByTime(String time) {
-    return storeReservationDayInfoRepository.findByTime(time).orElseThrow(
+    return storeReservationDayInfoRepository.findByTimes(time).orElseThrow(
         () -> new IllegalArgumentException("유효하지 않은 시간입니다")
     );
   }

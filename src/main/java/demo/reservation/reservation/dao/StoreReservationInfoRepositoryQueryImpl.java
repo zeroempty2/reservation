@@ -27,7 +27,7 @@ public class StoreReservationInfoRepositoryQueryImpl implements StoreReservation
     return Optional.ofNullable(
         jpaQueryFactory.selectFrom(storeReservationDayInfo)
             .where(storeReservationDayInfo.storeReservationInfo.id.eq(storeReservationInfoId)
-                .and(storeReservationDayInfo.time.eq(time)))
+                .and(storeReservationDayInfo.times.eq(time)))
             .fetchOne());
   }
 
@@ -40,8 +40,8 @@ public class StoreReservationInfoRepositoryQueryImpl implements StoreReservation
             Projections.bean(
                 StoreReservationDayInfoResponseDto.class
                 , storeReservationDayInfo.id
-                , storeReservationDayInfo.day
-                , storeReservationDayInfo.time
+                , storeReservationDayInfo.days
+                , storeReservationDayInfo.times
                 , storeReservationDayInfo.isPossible
                 , storeReservationDayInfo.capacity
 
@@ -49,8 +49,8 @@ public class StoreReservationInfoRepositoryQueryImpl implements StoreReservation
         )
         .from(store)
         .where(store.id.eq(storeId)
-              ,storeReservationInfo.year.eq(year)
-              ,storeReservationInfo.month.eq(month)
+              ,storeReservationInfo.years.eq(year)
+              ,storeReservationInfo.months.eq(month)
               ,storeReservationDayInfo.isPossible.eq(true)
         )
         .leftJoin(store.storeReservationInfos).fetchJoin()

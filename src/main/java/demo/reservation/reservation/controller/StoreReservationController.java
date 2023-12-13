@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequiredArgsConstructor
-@RequestMapping("/stores")
-public class StoreReservationController {
-  private final StoreReservationService storeReservationService;
+  @RestController
+  @RequiredArgsConstructor
+  @RequestMapping("/stores")
+  public class StoreReservationController {
+    private final StoreReservationService storeReservationService;
 
-  @PostMapping("/{storeId}/resevations")
+    @PostMapping("/{storeId}/resevations")
   public ResponseEntity<List<StoreReservationDayInfoResponseDto>> getStoreReservationMonthInfo(@RequestBody
-      StoreReservationInfoRequestDto storeReservationInfoRequestDto,@PathVariable Long storeId) {
+  StoreReservationInfoRequestDto storeReservationInfoRequestDto,@PathVariable Long storeId) {
     List<StoreReservationDayInfoResponseDto> storeReservationDayInfoResponseDtoList = storeReservationService.getStoreReservationDayInfoMonth(storeReservationInfoRequestDto,storeId);
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));

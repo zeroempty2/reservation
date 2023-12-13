@@ -21,10 +21,10 @@ public class StoreReservationDayInfo extends TimeStamped {
   private Long id;
 
   @Column
-  private Byte day;
+  private Byte days;
 
   @Column
-  private String time;
+  private String times;
 
   @Column
   private Boolean isPossible;

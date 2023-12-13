@@ -6,5 +6,5 @@ import org.springframework.data.repository.Repository;
 
 public interface StoreReservationDayInfoRepository extends Repository<StoreReservationDayInfo,Long> {
   Optional<StoreReservationDayInfo> findById(Long storeReservationDayInfoId);
-  Optional<StoreReservationDayInfo> findByTime(String time);
+  Optional<StoreReservationDayInfo> findByTimes(String time);
 }

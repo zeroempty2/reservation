@@ -27,10 +27,10 @@ public class StoreReservationInfo extends TimeStamped {
   private Long id;
 
   @Column
-  private Short year;
+  private Short years;
 
   @Column
-  private Byte month;
+  private Byte months;
 
 
 //연관관계
