@@ -30,22 +30,14 @@ public class Store extends TimeStamped {
   @Column(nullable = false)
   private ReservationPolicy reservationPolicy;
 
-  @Embedded
-  private StoreDesignatedDateInfo storeDesignatedDateInfo;
-
   //생성자
   @Builder
-  public Store(ReservationPolicy reservationPolicy,StoreDesignatedDateInfo storeDesignatedDateInfo){
+  public Store(ReservationPolicy reservationPolicy){
     this.reservationPolicy = reservationPolicy;
-    this.storeDesignatedDateInfo = storeDesignatedDateInfo;
   }
   //메서드
   public void updateStoreReservationPolicy(ReservationPolicy reservationPolicy){
     this.reservationPolicy = reservationPolicy;
-  }
-
-  public void updateStoreDesignatedDateInfo(StoreDesignatedDateInfo storeDesignatedDateInfo){
-    this.storeDesignatedDateInfo = storeDesignatedDateInfo;
   }
 
   //연관관계

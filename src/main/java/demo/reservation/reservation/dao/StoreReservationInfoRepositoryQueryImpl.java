@@ -58,5 +58,11 @@ public class StoreReservationInfoRepositoryQueryImpl implements StoreReservation
         .fetch();
   }
 
+  @Override
+  public boolean existsStoreReservationInfoByYearsAndMonths(Short years, Byte months) {
+    return jpaQueryFactory.from(storeReservationInfo).where(storeReservationInfo.years.eq(years),storeReservationInfo.months.eq(months)).select(storeReservationInfo.years,storeReservationInfo.months)
+        .setHint("org.hibernate.readOnly", true).fetchFirst() != null;
+  }
+
 
 }

@@ -7,6 +7,5 @@ import java.util.Optional;
 
 public interface StoreService {
   void addStore(AddStoreRequestDto addStoreRequestDto);
-
   Store findById(Long StoreId);
 }

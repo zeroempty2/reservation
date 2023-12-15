@@ -32,6 +32,15 @@ public class StoreReservationDayInfo extends TimeStamped {
   @Column
   private Integer capacity;
 
+  public StoreReservationDayInfo(Byte days, String times, Boolean isPossible, Integer capacity,
+      StoreReservationInfo storeReservationInfo) {
+    this.days = days;
+    this.times = times;
+    this.isPossible = isPossible;
+    this.capacity = capacity;
+    this.storeReservationInfo = storeReservationInfo;
+  }
+
   //메서드
   public void updateStoreReservationDayInfo(){
     this.capacity -= 1;

@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,9 +32,14 @@ public class StoreReservationInfo extends TimeStamped {
 
   @Column
   private Byte months;
+  @Builder
+  public StoreReservationInfo(Short years, Byte months, Store store) {
+    this.years = years;
+    this.months = months;
+    this.store = store;
+  }
 
-
-//연관관계
+  //연관관계
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "store_id")
   private Store store;
