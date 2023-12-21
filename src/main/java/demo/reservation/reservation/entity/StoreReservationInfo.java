@@ -32,11 +32,16 @@ public class StoreReservationInfo extends TimeStamped {
 
   @Column
   private Byte months;
+
+  @Column
+  private String storeReservationDayInfos;
+
   @Builder
-  public StoreReservationInfo(Short years, Byte months, Store store) {
+  public StoreReservationInfo(Short years, Byte months, Store store,String storeReservationDayInfos) {
     this.years = years;
     this.months = months;
     this.store = store;
+    this.storeReservationDayInfos = storeReservationDayInfos;
   }
 
   //연관관계
@@ -44,6 +49,5 @@ public class StoreReservationInfo extends TimeStamped {
   @JoinColumn(name = "store_id")
   private Store store;
 
-  @OneToMany(mappedBy = "storeReservationInfo", cascade = CascadeType.ALL, orphanRemoval = true)
-  private Set<StoreReservationDayInfo> storeReservationDayInfos = new LinkedHashSet<>();
+
 }

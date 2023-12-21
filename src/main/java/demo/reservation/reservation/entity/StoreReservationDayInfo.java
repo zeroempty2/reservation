@@ -1,44 +1,26 @@
 package demo.reservation.reservation.entity;
 
-import demo.reservation.util.TimeStamped;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-@Entity
-public class StoreReservationDayInfo extends TimeStamped {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+public class StoreReservationDayInfo {
 
-  @Column
   private Byte days;
 
-  @Column
   private String times;
 
-  @Column
   private Boolean isPossible;
 
-  @Column
   private Integer capacity;
 
-  public StoreReservationDayInfo(Byte days, String times, Boolean isPossible, Integer capacity,
-      StoreReservationInfo storeReservationInfo) {
+  public StoreReservationDayInfo(Byte days, String times, Boolean isPossible, Integer capacity) {
     this.days = days;
     this.times = times;
     this.isPossible = isPossible;
     this.capacity = capacity;
-    this.storeReservationInfo = storeReservationInfo;
   }
 
   //메서드
@@ -49,8 +31,26 @@ public class StoreReservationDayInfo extends TimeStamped {
     }
   }
 
-//연관관계
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "storeReservationInfo_id")
-  private StoreReservationInfo storeReservationInfo;
+  @Override
+  public String toString(){
+    return "StoreReservationDayInfo{" +
+        "days=" + days +
+        ", times=" + times +
+        ", isPossible=" + isPossible +
+        ", capacity=" + capacity +
+        '}';
+  }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    StoreReservationDayInfo storeReservationDayInfo = (StoreReservationDayInfo) o;
+    return Objects.equals(days, storeReservationDayInfo.days) && Objects.equals(times, storeReservationDayInfo.times) && storeReservationDayInfo.isPossible == isPossible && Objects.equals(
+        storeReservationDayInfo.capacity, capacity);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(days, times,isPossible,capacity);
+  }
 }

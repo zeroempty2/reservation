@@ -27,14 +27,19 @@ public class StoreReservationServiceImpl implements StoreReservationService {
       AddStoreReservationDayInfoMonthRequestDto addStoreReservationDayInfoMonthRequestDto,Long storeId) {
     Store store = storeService.findById(storeId);
 
-    if(!storeReservationInfoRepository.existsStoreReservationInfoByYearsAndMonths(
+    if(storeReservationInfoRepository.existsStoreReservationInfoByYearsAndMonths(
         addStoreReservationDayInfoMonthRequestDto.years(),addStoreReservationDayInfoMonthRequestDto.months())){
-      addStoreReservationInfo(addStoreReservationDayInfoMonthRequestDto.years(),addStoreReservationDayInfoMonthRequestDto.months(),store);
+      throw new IllegalArgumentException("이미 존재하는 예약입니다");
     }
 
-    StoreReservationInfo storeReservationInfo = findStoreReservationInfoByYearsAndMonths(addStoreReservationDayInfoMonthRequestDto.years(),addStoreReservationDayInfoMonthRequestDto.months());
+    StoreReservationInfo storeReservationInfo = StoreReservationInfo.builder()
+        .store(store)
+        .storeReservationDayInfos(addStoreReservationDayInfoMonthRequestDto.dayList())
+        .months(addStoreReservationDayInfoMonthRequestDto.months())
+        .years(addStoreReservationDayInfoMonthRequestDto.years())
+        .build();
 
-
+    storeReservationInfoRepository.save(storeReservationInfo);
   }
 
   @Override
