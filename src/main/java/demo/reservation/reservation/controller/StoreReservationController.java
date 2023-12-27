@@ -5,6 +5,7 @@ import static demo.reservation.util.HttpResponse.RESPONSE_CREATED;
 
 import demo.reservation.common.dto.StatusResponseDto;
 import demo.reservation.reservation.dto.AddStoreReservationDayInfoMonthRequestDto;
+import demo.reservation.reservation.dto.StoreReservationAddDto;
 import demo.reservation.reservation.dto.StoreReservationDayInfoResponseDto;
 import demo.reservation.reservation.dto.StoreReservationInfoRequestDto;
 import demo.reservation.reservation.service.interfaces.StoreReservationService;
@@ -28,8 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 
     @PostMapping("/{storeId}")
     public ResponseEntity<StatusResponseDto> addStoreReservationMonthInfo(@RequestBody
-    AddStoreReservationDayInfoMonthRequestDto addStoreReservationInfoRequestDto,@PathVariable Long storeId) {
-      storeReservationService.addStoreReservationDayInfoMonth(addStoreReservationInfoRequestDto,storeId);
+    StoreReservationAddDto storeReservationAddDto,@PathVariable Long storeId) {
+      storeReservationService.addStoreReservationDayInfoMonth(storeReservationAddDto,storeId);
       return RESPONSE_CREATED;
     }
 

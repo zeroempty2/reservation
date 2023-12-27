@@ -1,5 +1,6 @@
 package demo.reservation.reservation.entity;
 
+import demo.reservation.store.entity.Store;
 import demo.reservation.user.entity.User;
 import demo.reservation.util.enums.ReservationStatus;
 import jakarta.persistence.Column;
@@ -25,11 +26,30 @@ public class UserReservation {
   @Column
   private ReservationStatus reservationStatus;
 
+  @Column
+  private Short years;
+
+  @Column
+  private Byte months;
+
+  @Column
+  private String times;
+
+  @Column
+  private Byte days;
+
   //생성자
   @Builder
-  public UserReservation(ReservationStatus reservationStatus,User user){
+  public UserReservation(ReservationStatus reservationStatus, Store store, Short years,
+      Byte months,
+      String times, User user,Byte days) {
     this.reservationStatus = reservationStatus;
+    this.store = store;
+    this.years = years;
+    this.months = months;
+    this.times = times;
     this.user = user;
+    this.days = days;
   }
 
   //메서드
@@ -42,4 +62,7 @@ public class UserReservation {
   @JoinColumn(name = "user_id")
   private User user;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
+  private Store store;
 }

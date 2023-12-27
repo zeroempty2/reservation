@@ -3,6 +3,7 @@ package demo.reservation.reservation.service;
 import demo.reservation.reservation.dao.StoreReservationDayInfoRepository;
 import demo.reservation.reservation.dao.StoreReservationInfoRepository;
 import demo.reservation.reservation.dto.AddStoreReservationDayInfoMonthRequestDto;
+import demo.reservation.reservation.dto.StoreReservationAddDto;
 import demo.reservation.reservation.dto.StoreReservationDayInfoResponseDto;
 import demo.reservation.reservation.dto.StoreReservationInfoRequestDto;
 import demo.reservation.reservation.entity.StoreReservationDayInfo;
@@ -24,19 +25,19 @@ public class StoreReservationServiceImpl implements StoreReservationService {
 
   @Override
   public void addStoreReservationDayInfoMonth(
-      AddStoreReservationDayInfoMonthRequestDto addStoreReservationDayInfoMonthRequestDto,Long storeId) {
+      StoreReservationAddDto storeReservationAddDto,Long storeId) {
     Store store = storeService.findById(storeId);
 
     if(storeReservationInfoRepository.existsStoreReservationInfoByYearsAndMonths(
-        addStoreReservationDayInfoMonthRequestDto.years(),addStoreReservationDayInfoMonthRequestDto.months())){
+        storeReservationAddDto.years(),storeReservationAddDto.months())){
       throw new IllegalArgumentException("이미 존재하는 예약입니다");
     }
 
     StoreReservationInfo storeReservationInfo = StoreReservationInfo.builder()
         .store(store)
-        .storeReservationDayInfos(addStoreReservationDayInfoMonthRequestDto.dayList())
-        .months(addStoreReservationDayInfoMonthRequestDto.months())
-        .years(addStoreReservationDayInfoMonthRequestDto.years())
+        .months(storeReservationAddDto.months())
+        .years(storeReservationAddDto.years())
+        .storeReservationDayInfos(storeReservationAddDto.StoreReservationDayinfos())
         .build();
 
     storeReservationInfoRepository.save(storeReservationInfo);
@@ -85,13 +86,12 @@ public class StoreReservationServiceImpl implements StoreReservationService {
     );
   }
 
-  private void addStoreReservationInfo(Short years,Byte months,Store store){
-    StoreReservationInfo storeReservationInfo = StoreReservationInfo.builder()
-        .years(years)
-        .store(store)
-        .months(months)
-        .build();
-    storeReservationInfoRepository.saveAndFlush(storeReservationInfo);
+  @Override
+  public StoreReservationInfo findById(Long storeReservationInfoId) {
+    return storeReservationInfoRepository.findById(storeReservationInfoId).orElseThrow(
+        () -> new IllegalArgumentException("유효하지 않은 정보입니다")
+    );
   }
+
 
 }

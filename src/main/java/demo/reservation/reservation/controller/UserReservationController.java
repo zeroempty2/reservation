@@ -25,10 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserReservationController {
   private final UserReservationService userReservationService;
 
-  @PostMapping("/{storeReservationDayInfoId}")
-  public ResponseEntity<StatusResponseDto> requestReservation(@PathVariable Long storeReservationDayInfoId, @AuthenticationPrincipal
-  UserDetailsImpl userDetails) {
-    boolean isPossible = userReservationService.requestReservation(storeReservationDayInfoId,userDetails.getUserId());
+  @PostMapping("/{storeId}/{storeReservationInfoId}")
+  public ResponseEntity<StatusResponseDto> requestReservation(@AuthenticationPrincipal
+  UserDetailsImpl userDetails,@PathVariable Long storeId,@PathVariable Long storeReservationInfoId,RequestReservationDto requestReservationDto) {
+    boolean isPossible = userReservationService.requestReservation(userDetails.getUserId(),storeId,storeReservationInfoId,requestReservationDto);
     return isPossible ? RESPONSE_OK : BAD_REQUEST;
   }
 }

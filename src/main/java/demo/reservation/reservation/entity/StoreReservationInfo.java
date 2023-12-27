@@ -44,6 +44,11 @@ public class StoreReservationInfo extends TimeStamped {
     this.storeReservationDayInfos = storeReservationDayInfos;
   }
 
+  //메서드
+  public void update(String storeReservationDayInfos){
+    this.storeReservationDayInfos = storeReservationDayInfos;
+  }
+
   //연관관계
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "store_id")

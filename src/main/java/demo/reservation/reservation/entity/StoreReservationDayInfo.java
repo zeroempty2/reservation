@@ -51,6 +51,6 @@ public class StoreReservationDayInfo {
 
   @Override
   public int hashCode() {
-    return Objects.hash(days, times,isPossible,capacity);
+    return Objects.hash(days,times,isPossible,capacity);
   }
 }
