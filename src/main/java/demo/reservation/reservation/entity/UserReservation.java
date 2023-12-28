@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.util.Objects;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -55,6 +56,10 @@ public class UserReservation {
   //메서드
   public void updateUserReservation(ReservationStatus reservationStatus){
     this.reservationStatus = reservationStatus;
+  }
+
+  public boolean isReservationOwner(Long userId){
+    return Objects.equals(this.user.getId(), userId);
   }
 
   //연관관계

@@ -44,11 +44,11 @@ public class StoreReservationServiceImpl implements StoreReservationService {
   }
 
   @Override
-  public List<StoreReservationDayInfoResponseDto> getStoreReservationDayInfoMonth(
-      StoreReservationInfoRequestDto storeReservationInfoRequestDto, Long storeId) {
-    return storeReservationInfoRepository.findStoreMonthReservationByStoreIdAndMonth(storeId,
-        storeReservationInfoRequestDto.year(), storeReservationInfoRequestDto.month());
+  public StoreReservationInfo getStoreReservationInfoByStoreIdAndYearsAndMonths(Short years,
+      Byte months, Long storeId) {
+    return storeReservationInfoRepository.findStoreMonthReservationByStoreIdAndMonth(storeId,years,months);
   }
+
 
   @Override
   public StoreReservationInfo findStoreReservationInfoById(Long storeReservationInfoId) {

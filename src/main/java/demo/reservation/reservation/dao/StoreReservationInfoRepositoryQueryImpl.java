@@ -12,6 +12,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import demo.reservation.reservation.dto.StoreReservationDayInfoResponseDto;
 import demo.reservation.reservation.entity.StoreReservationDayInfo;
+import demo.reservation.reservation.entity.StoreReservationInfo;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -33,29 +34,26 @@ public class StoreReservationInfoRepositoryQueryImpl implements StoreReservation
 
   @Override
   @Transactional
-  public List<StoreReservationDayInfoResponseDto> findStoreMonthReservationByStoreIdAndMonth(
+  public StoreReservationInfo findStoreMonthReservationByStoreIdAndMonth(
       Long storeId, Short year, Byte month) {
     return jpaQueryFactory
         .select(
             Projections.bean(
-                StoreReservationDayInfoResponseDto.class
-                , storeReservationDayInfo.id
-                , storeReservationDayInfo.days
-                , storeReservationDayInfo.times
-                , storeReservationDayInfo.isPossible
-                , storeReservationDayInfo.capacity
-
+                StoreReservationInfo.class
+                , storeReservationInfo.id
+                , storeReservationInfo.years
+                , storeReservationInfo.months
+                , storeReservationInfo.storeReservationDayInfos
+                , storeReservationInfo.store
                 )
         )
-        .from(store)
-        .where(store.id.eq(storeId)
+        .from(storeReservationInfo)
+        .where(storeReservationInfo.store.id.eq(storeId)
               ,storeReservationInfo.years.eq(year)
               ,storeReservationInfo.months.eq(month)
-              ,storeReservationDayInfo.isPossible.eq(true)
         )
-        .leftJoin(store.storeReservationInfos).fetchJoin()
-        .leftJoin(storeReservationInfo.storeReservationDayInfos).fetchJoin()
-        .fetch();
+        .leftJoin(storeReservationInfo.store).fetchJoin()
+        .fetchOne();
   }
 
   @Override

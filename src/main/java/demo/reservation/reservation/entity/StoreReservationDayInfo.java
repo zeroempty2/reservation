@@ -26,8 +26,15 @@ public class StoreReservationDayInfo {
   //메서드
   public void updateStoreReservationDayInfo(){
     this.capacity -= 1;
-    if(capacity < 1){
+    if(this.capacity < 1){
       this.isPossible = false;
+    }
+  }
+
+  public void cancelUpdateStoreReservationDayInfo(){
+    this.capacity += 1;
+    if(this.capacity > 0){
+      this.isPossible = true;
     }
   }
 

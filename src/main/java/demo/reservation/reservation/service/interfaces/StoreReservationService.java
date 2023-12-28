@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface StoreReservationService {
   void addStoreReservationDayInfoMonth(StoreReservationAddDto storeReservationAddDto,Long StoreId);
-  List<StoreReservationDayInfoResponseDto> getStoreReservationDayInfoMonth(StoreReservationInfoRequestDto storeReservationInfoRequestDto,Long storeId);
+  StoreReservationInfo getStoreReservationInfoByStoreIdAndYearsAndMonths(Short years, Byte months, Long storeId);
 
   StoreReservationInfo findStoreReservationInfoById(Long storeReservationInfoId);
   StoreReservationDayInfo findStoreReservationDayInfoByTime(String time);

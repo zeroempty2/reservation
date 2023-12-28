@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface StoreReservationInfoRepositoryQuery {
   Optional<StoreReservationDayInfo> findStoreReservationDayInfoByStoreReservationInfoIdAndTime(Long storeReservationInfoId,String time);
-  List<StoreReservationDayInfoResponseDto> findStoreMonthReservationByStoreIdAndMonth(Long storeId,Short year,Byte month);
+  StoreReservationInfo findStoreMonthReservationByStoreIdAndMonth(Long storeId,Short year,Byte month);
   boolean existsStoreReservationInfoByYearsAndMonths(Short years, Byte months);
 }

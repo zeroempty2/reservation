@@ -15,6 +15,7 @@ import demo.reservation.store.service.interfaces.StoreService;
 import demo.reservation.user.entity.User;
 import demo.reservation.user.service.interfaces.UserService;
 import demo.reservation.util.enums.ReservationStatus;
+import java.util.Objects;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,33 @@ public class UserReservationServiceImpl implements UserReservationService {
     userReservationRepository.save(reservation);
     return true;
   }
+
+  @Override
+  @Transactional
+  public void cancelReservation(Long userId, Long userReservationId) {
+    User user = userService.findById(userId);
+    UserReservation reservation = findById(userReservationId);
+    Store store = reservation.getStore();
+    Short years = reservation.getYears();
+    Byte months = reservation.getMonths();
+    Byte days = reservation.getDays();
+    String times = reservation.getTimes();
+    if(!reservation.isReservationOwner(user.getId())){
+      throw new IllegalArgumentException("사용자 정보가 일치하지 않습니다");
+    }
+    reservation.updateUserReservation(ReservationStatus.Cancelled);
+    StoreReservationInfo storeReservationInfo = storeReservationService.getStoreReservationInfoByStoreIdAndYearsAndMonths(years,months,store.getId());
+    String cancelUpdateReservationDayInfo = normalizationAndCancelStoreReservationDayInfos(storeReservationInfo.getStoreReservationDayInfos(),days,times);
+    storeReservationInfo.update(cancelUpdateReservationDayInfo);
+  }
+
+  @Override
+  public UserReservation findById(Long userReservationId) {
+    return userReservationRepository.findById(userReservationId).orElseThrow(
+        () -> new IllegalArgumentException("유효한 id가 아닙니다")
+    );
+  }
+
   private String normalizationStoreReservationDayInfos(String storeReservationDayInfos,RequestReservationDto requestReservationDto){
     Gson gson = new Gson();
     //데이터 정규화
@@ -66,4 +94,24 @@ public class UserReservationServiceImpl implements UserReservationService {
     storeReservationDayInfoSet.add(storeReservationDayInfo);
     return gson.toJson(storeReservationDayInfoSet);
   }
+
+  private String normalizationAndCancelStoreReservationDayInfos(String storeReservationDayInfos,Byte days,String times){
+    Gson gson = new Gson();
+    //데이터 정규화
+    Set<StoreReservationDayInfo> storeReservationDayInfoSet = gson.fromJson(storeReservationDayInfos, new TypeToken<Set<StoreReservationDayInfo>>() {}.getType());
+
+    StoreReservationDayInfo foundInfo = storeReservationDayInfoSet.stream()
+        .filter(info -> info.getDays().equals(days) && info.getTimes().equals(times))
+        .findFirst()
+        .orElseThrow(
+            () -> new IllegalArgumentException("유효한 정보가 아닙니다")
+        );
+
+
+    storeReservationDayInfoSet.remove(foundInfo);
+    foundInfo.cancelUpdateStoreReservationDayInfo();
+    storeReservationDayInfoSet.add(foundInfo);
+    return gson.toJson(storeReservationDayInfoSet);
+  }
+
 }
