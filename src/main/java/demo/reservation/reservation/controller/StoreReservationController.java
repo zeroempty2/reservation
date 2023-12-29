@@ -4,13 +4,11 @@ package demo.reservation.reservation.controller;
 import static demo.reservation.util.HttpResponse.RESPONSE_CREATED;
 
 import demo.reservation.common.dto.StatusResponseDto;
-import demo.reservation.reservation.dto.AddStoreReservationDayInfoMonthRequestDto;
 import demo.reservation.reservation.dto.StoreReservationAddDto;
-import demo.reservation.reservation.dto.StoreReservationDayInfoResponseDto;
 import demo.reservation.reservation.dto.StoreReservationInfoRequestDto;
+import demo.reservation.reservation.dto.StoreReservationInfoResponseDto;
 import demo.reservation.reservation.service.interfaces.StoreReservationService;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -34,12 +32,12 @@ import org.springframework.web.bind.annotation.RestController;
       return RESPONSE_CREATED;
     }
 
-//    @PostMapping("/{storeId}/resevations")
-//  public ResponseEntity<List<StoreReservationDayInfoResponseDto>> getStoreReservationMonthInfo(@RequestBody
-//  StoreReservationInfoRequestDto storeReservationInfoRequestDto,@PathVariable Long storeId) {
-//    List<StoreReservationDayInfoResponseDto> storeReservationDayInfoResponseDtoList = storeReservationService.getStoreReservationDayInfoMonth(storeReservationInfoRequestDto,storeId);
-//    HttpHeaders headers = new HttpHeaders();
-//    headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
-//    return ResponseEntity.ok().headers(headers).body(storeReservationDayInfoResponseDtoList);
-//  }
+    @PostMapping("/{storeId}/reservations")
+  public ResponseEntity<StoreReservationInfoResponseDto> getStoreReservationMonthInfo(@RequestBody
+  StoreReservationInfoRequestDto storeReservationInfoRequestDto,@PathVariable Long storeId) {
+    StoreReservationInfoResponseDto storeReservationDayInfoResponseDto = storeReservationService.getStoreReservationInfo(storeReservationInfoRequestDto,storeId);
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
+    return ResponseEntity.ok().headers(headers).body(storeReservationDayInfoResponseDto);
+  }
 }

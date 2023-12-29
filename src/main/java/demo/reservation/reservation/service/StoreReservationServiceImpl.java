@@ -6,6 +6,7 @@ import demo.reservation.reservation.dto.AddStoreReservationDayInfoMonthRequestDt
 import demo.reservation.reservation.dto.StoreReservationAddDto;
 import demo.reservation.reservation.dto.StoreReservationDayInfoResponseDto;
 import demo.reservation.reservation.dto.StoreReservationInfoRequestDto;
+import demo.reservation.reservation.dto.StoreReservationInfoResponseDto;
 import demo.reservation.reservation.entity.StoreReservationDayInfo;
 import demo.reservation.reservation.entity.StoreReservationInfo;
 import demo.reservation.reservation.service.interfaces.StoreReservationService;
@@ -47,6 +48,13 @@ public class StoreReservationServiceImpl implements StoreReservationService {
   public StoreReservationInfo getStoreReservationInfoByStoreIdAndYearsAndMonths(Short years,
       Byte months, Long storeId) {
     return storeReservationInfoRepository.findStoreMonthReservationByStoreIdAndMonth(storeId,years,months);
+  }
+
+  @Override
+  public StoreReservationInfoResponseDto getStoreReservationInfo(
+      StoreReservationInfoRequestDto storeReservationInfoRequestDto, Long storeId) {
+    return storeReservationInfoRepository.findStoreMonthReservationAndResponse(storeId,storeReservationInfoRequestDto.year(),
+        storeReservationInfoRequestDto.month());
   }
 
 

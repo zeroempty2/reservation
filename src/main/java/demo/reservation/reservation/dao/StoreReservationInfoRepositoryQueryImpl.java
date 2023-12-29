@@ -2,18 +2,13 @@ package demo.reservation.reservation.dao;
 
 import static demo.reservation.reservation.entity.QStoreReservationDayInfo.storeReservationDayInfo;
 import static demo.reservation.reservation.entity.QStoreReservationInfo.storeReservationInfo;
-import static demo.reservation.store.entity.QStore.store;
 
 
-import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.Wildcard;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import demo.reservation.reservation.dto.StoreReservationDayInfoResponseDto;
+import demo.reservation.reservation.dto.StoreReservationInfoResponseDto;
 import demo.reservation.reservation.entity.StoreReservationDayInfo;
 import demo.reservation.reservation.entity.StoreReservationInfo;
-import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +46,29 @@ public class StoreReservationInfoRepositoryQueryImpl implements StoreReservation
         .where(storeReservationInfo.store.id.eq(storeId)
               ,storeReservationInfo.years.eq(year)
               ,storeReservationInfo.months.eq(month)
+        )
+        .leftJoin(storeReservationInfo.store).fetchJoin()
+        .fetchOne();
+  }
+
+  @Override
+  @Transactional
+  public StoreReservationInfoResponseDto findStoreMonthReservationAndResponse(
+      Long storeId, Short year, Byte month) {
+    return jpaQueryFactory
+        .select(
+            Projections.bean(
+                StoreReservationInfoResponseDto.class
+                , storeReservationInfo.id
+                , storeReservationInfo.years
+                , storeReservationInfo.months
+                , storeReservationInfo.storeReservationDayInfos
+            )
+        )
+        .from(storeReservationInfo)
+        .where(storeReservationInfo.store.id.eq(storeId)
+            ,storeReservationInfo.years.eq(year)
+            ,storeReservationInfo.months.eq(month)
         )
         .leftJoin(storeReservationInfo.store).fetchJoin()
         .fetchOne();

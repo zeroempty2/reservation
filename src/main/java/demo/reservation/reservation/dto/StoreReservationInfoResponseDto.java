@@ -1,14 +1,5 @@
-//package demo.reservation.reservation.dto;
-//
-//
-//import java.time.Month;
-//import java.util.List;
-//
-//
-//public class StoreReservationInfoResponseDto {
-//  private Short year;
-//  private Byte Month;
-//  private List<StoreReservationDayInfoResponseDto> storeReservationDayInfoResponseDtoList;
-//
-//
-//}
+package demo.reservation.reservation.dto;
+
+public record StoreReservationInfoResponseDto(Long storeReservationInfoId, Short years,Byte months,String StoreReservationDayInfos) {
+
+}
