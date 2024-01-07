@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
   @RestController
   @RequiredArgsConstructor
-  @RequestMapping("/stores")
+  @RequestMapping("/stores/reservations")
   public class StoreReservationController {
     private final StoreReservationService storeReservationService;
 
@@ -31,8 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
       storeReservationService.addStoreReservationDayInfoMonth(storeReservationAddDto,storeId);
       return RESPONSE_CREATED;
     }
-
-    @PostMapping("/{storeId}/reservations")
+  @GetMapping("/info/{storeId}")
   public ResponseEntity<StoreReservationInfoResponseDto> getStoreReservationMonthInfo(@RequestBody
   StoreReservationInfoRequestDto storeReservationInfoRequestDto,@PathVariable Long storeId) {
     StoreReservationInfoResponseDto storeReservationDayInfoResponseDto = storeReservationService.getStoreReservationInfo(storeReservationInfoRequestDto,storeId);

@@ -1,6 +1,6 @@
 package demo.reservation.reservation.service;
 
-import demo.reservation.reservation.dao.StoreReservationDayInfoRepository;
+
 import demo.reservation.reservation.dao.StoreReservationInfoRepository;
 import demo.reservation.reservation.dto.AddStoreReservationDayInfoMonthRequestDto;
 import demo.reservation.reservation.dto.StoreReservationAddDto;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class StoreReservationServiceImpl implements StoreReservationService {
   private final StoreReservationInfoRepository storeReservationInfoRepository;
-  private final StoreReservationDayInfoRepository storeReservationDayInfoRepository;
+
   private final StoreService storeService;
 
 
@@ -53,8 +53,8 @@ public class StoreReservationServiceImpl implements StoreReservationService {
   @Override
   public StoreReservationInfoResponseDto getStoreReservationInfo(
       StoreReservationInfoRequestDto storeReservationInfoRequestDto, Long storeId) {
-    return storeReservationInfoRepository.findStoreMonthReservationAndResponse(storeId,storeReservationInfoRequestDto.year(),
-        storeReservationInfoRequestDto.month());
+    return storeReservationInfoRepository.findStoreMonthReservationAndResponse(storeId,storeReservationInfoRequestDto.years(),
+        storeReservationInfoRequestDto.months());
   }
 
 
@@ -64,29 +64,6 @@ public class StoreReservationServiceImpl implements StoreReservationService {
         () -> new IllegalArgumentException("유효하지 않은 ID입니다")
     );
   }
-
-  @Override
-  public StoreReservationDayInfo findStoreReservationDayInfoByTime(String time) {
-    return storeReservationDayInfoRepository.findByTimes(time).orElseThrow(
-        () -> new IllegalArgumentException("유효하지 않은 시간입니다")
-    );
-  }
-
-  @Override
-  public StoreReservationDayInfo findStoreReservationDayInfoById(Long storeReservationDayInfoId) {
-    return storeReservationDayInfoRepository.findById(storeReservationDayInfoId).orElseThrow(
-        () -> new IllegalArgumentException("유효하지 않은 시간입니다")
-    );
-  }
-
-  @Override
-  public StoreReservationDayInfo findStoreReservationDayInfoByStoreReservationInfoIdAndTime(
-      Long storeReservationInfoId, String time) {
-    return storeReservationInfoRepository.findStoreReservationDayInfoByStoreReservationInfoIdAndTime(storeReservationInfoId,time).orElseThrow(
-        () -> new IllegalArgumentException("유효하지 않은 정보입니다")
-    );
-  }
-
   @Override
   public StoreReservationInfo findStoreReservationInfoByYearsAndMonths(Short years, Byte months) {
     return storeReservationInfoRepository.findStoreReservationInfoByYearsAndMonths(years,months).orElseThrow(

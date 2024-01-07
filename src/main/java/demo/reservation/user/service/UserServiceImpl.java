@@ -7,6 +7,7 @@ import demo.reservation.user.dto.UserSignUpRequestDto;
 import demo.reservation.user.entity.User;
 import demo.reservation.user.service.interfaces.UserService;
 import demo.reservation.util.JwtUtil;
+import demo.reservation.util.enums.UserRoleEnum;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +28,7 @@ public class UserServiceImpl implements UserService {
         .username(signUpRequestDto.username())
         .password(password)
         .accountName(signUpRequestDto.accountName())
+        .role(UserRoleEnum.CUSTOMER)
         .build();
     userRepository.save(user);
   }

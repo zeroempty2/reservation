@@ -16,12 +16,7 @@ public class StoreServiceImpl implements StoreService {
 
   private final StoreRepository storeRepository;
 
-  @Override
-  @Transactional
-  public void addStore(AddStoreRequestDto addStoreRequestDto) {
-    Store store = storeHasFixedDate();
-    storeRepository.save(store);
-  }
+
 
   @Override
   @Transactional
@@ -39,10 +34,6 @@ public class StoreServiceImpl implements StoreService {
 //        .build();
 //  }
 
-  private Store storeHasFixedDate() {
-    return Store.builder()
-        .reservationPolicy(ReservationPolicy.FixedDateOpen)
-        .build();
-  }
+
 
 }

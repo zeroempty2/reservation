@@ -27,18 +27,12 @@ public class Store extends TimeStamped {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
-  private ReservationPolicy reservationPolicy;
 
   //생성자
-  @Builder
-  public Store(ReservationPolicy reservationPolicy){
-    this.reservationPolicy = reservationPolicy;
-  }
+
   //메서드
-  public void updateStoreReservationPolicy(ReservationPolicy reservationPolicy){
-    this.reservationPolicy = reservationPolicy;
-  }
+
+  
 
   //연관관계
   @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)

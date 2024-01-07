@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class StoreController {
   private final StoreService storeService;
 
-  @PostMapping("/add")
-  public ResponseEntity<StatusResponseDto> addStore(@RequestBody AddStoreRequestDto addStoreRequestDto){
-    storeService.addStore(addStoreRequestDto);
-    return RESPONSE_CREATED;
-  }
+//  @PostMapping("/add")
+//  public ResponseEntity<StatusResponseDto> addStore(@RequestBody AddStoreRequestDto addStoreRequestDto){
+//    storeService.addStore(addStoreRequestDto);
+//    return RESPONSE_CREATED;
+//  }
 
 }

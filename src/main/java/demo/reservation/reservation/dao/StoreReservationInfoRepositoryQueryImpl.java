@@ -1,6 +1,6 @@
 package demo.reservation.reservation.dao;
 
-import static demo.reservation.reservation.entity.QStoreReservationDayInfo.storeReservationDayInfo;
+
 import static demo.reservation.reservation.entity.QStoreReservationInfo.storeReservationInfo;
 
 
@@ -20,11 +20,7 @@ public class StoreReservationInfoRepositoryQueryImpl implements StoreReservation
   @Transactional
   public Optional<StoreReservationDayInfo> findStoreReservationDayInfoByStoreReservationInfoIdAndTime(
       Long storeReservationInfoId, String time) {
-    return Optional.ofNullable(
-        jpaQueryFactory.selectFrom(storeReservationDayInfo)
-            .where(storeReservationDayInfo.storeReservationInfo.id.eq(storeReservationInfoId)
-                .and(storeReservationDayInfo.times.eq(time)))
-            .fetchOne());
+    return Optional.empty();
   }
 
   @Override
@@ -57,7 +53,7 @@ public class StoreReservationInfoRepositoryQueryImpl implements StoreReservation
       Long storeId, Short year, Byte month) {
     return jpaQueryFactory
         .select(
-            Projections.bean(
+            Projections.constructor(
                 StoreReservationInfoResponseDto.class
                 , storeReservationInfo.id
                 , storeReservationInfo.years
@@ -70,7 +66,7 @@ public class StoreReservationInfoRepositoryQueryImpl implements StoreReservation
             ,storeReservationInfo.years.eq(year)
             ,storeReservationInfo.months.eq(month)
         )
-        .leftJoin(storeReservationInfo.store).fetchJoin()
+        .leftJoin(storeReservationInfo.store)
         .fetchOne();
   }
 

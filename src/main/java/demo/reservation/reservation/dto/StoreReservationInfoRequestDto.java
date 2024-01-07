@@ -1,5 +1,5 @@
 package demo.reservation.reservation.dto;
 
-public record StoreReservationInfoRequestDto(Short year,Byte month) {
+public record StoreReservationInfoRequestDto(Short years,Byte months) {
 
 }

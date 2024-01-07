@@ -16,9 +16,6 @@ public interface StoreReservationService {
   StoreReservationInfo getStoreReservationInfoByStoreIdAndYearsAndMonths(Short years, Byte months, Long storeId);
   StoreReservationInfoResponseDto getStoreReservationInfo(StoreReservationInfoRequestDto storeReservationInfoRequestDto,Long storeId);
   StoreReservationInfo findStoreReservationInfoById(Long storeReservationInfoId);
-  StoreReservationDayInfo findStoreReservationDayInfoByTime(String time);
-  StoreReservationDayInfo findStoreReservationDayInfoById(Long storeReservationDayInfoId);
-  StoreReservationDayInfo findStoreReservationDayInfoByStoreReservationInfoIdAndTime(Long storeReservationInfoId,String time);
   StoreReservationInfo findStoreReservationInfoByYearsAndMonths(Short years,Byte months);
   StoreReservationInfo findById(Long storeReservationInfoId);
 }

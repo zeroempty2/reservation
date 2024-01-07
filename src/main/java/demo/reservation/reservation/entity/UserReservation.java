@@ -68,6 +68,6 @@ public class UserReservation {
   private User user;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "store_id")
   private Store store;
 }
