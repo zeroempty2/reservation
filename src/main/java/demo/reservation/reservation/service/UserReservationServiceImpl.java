@@ -45,8 +45,8 @@ public class UserReservationServiceImpl implements UserReservationService {
         .user(user)
         .years(storeReservationInfo.getYears())
         .times(requestReservationDto.times())
-        .months(requestReservationDto.months())
-        .days(requestReservationDto.day())
+        .months(storeReservationInfo.getMonths())
+        .days(requestReservationDto.days())
         .reservationStatus(ReservationStatus.Processing)
         .build();
     storeReservationInfo.update(updateReservationDayInfo);
@@ -84,10 +84,14 @@ public class UserReservationServiceImpl implements UserReservationService {
     Gson gson = new Gson();
     //데이터 정규화
     Set<StoreReservationDayInfo> storeReservationDayInfoSet = gson.fromJson(storeReservationDayInfos, new TypeToken<Set<StoreReservationDayInfo>>() {}.getType());
-    StoreReservationDayInfo storeReservationDayInfo = new StoreReservationDayInfo(
-        requestReservationDto.day(),requestReservationDto.times(),true,requestReservationDto.capacity());
-    //일치하는 예약정보가 없으면 불가능 반환
-    if(!storeReservationDayInfoSet.contains(storeReservationDayInfo)) return "imPossible";
+
+    StoreReservationDayInfo storeReservationDayInfo = storeReservationDayInfoSet.stream()
+        .peek(info -> System.out.println("Comparing with: " + info))
+        .filter(info -> Objects.equals(info.getDays(), requestReservationDto.days()) && info.getTimes().equals(requestReservationDto.times()) && info.getIsPossible())
+        .findFirst()
+        .orElseThrow(
+            () -> new IllegalArgumentException("유효한 정보가 아닙니다")
+        );
 
     storeReservationDayInfoSet.remove(storeReservationDayInfo);
     storeReservationDayInfo.updateStoreReservationDayInfo();
@@ -106,7 +110,6 @@ public class UserReservationServiceImpl implements UserReservationService {
         .orElseThrow(
             () -> new IllegalArgumentException("유효한 정보가 아닙니다")
         );
-
 
     storeReservationDayInfoSet.remove(foundInfo);
     foundInfo.cancelUpdateStoreReservationDayInfo();
