@@ -29,21 +29,14 @@ public class StoreReservationInfoRepositoryQueryImpl implements StoreReservation
       Long storeId, Short year, Byte month) {
     return jpaQueryFactory
         .select(
-            Projections.bean(
-                StoreReservationInfo.class
-                , storeReservationInfo.id
-                , storeReservationInfo.years
-                , storeReservationInfo.months
-                , storeReservationInfo.storeReservationDayInfos
-                , storeReservationInfo.store
-                )
+            storeReservationInfo
         )
         .from(storeReservationInfo)
         .where(storeReservationInfo.store.id.eq(storeId)
               ,storeReservationInfo.years.eq(year)
               ,storeReservationInfo.months.eq(month)
         )
-        .leftJoin(storeReservationInfo.store).fetchJoin()
+        .leftJoin(storeReservationInfo.store)
         .fetchOne();
   }
 
