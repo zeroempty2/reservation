@@ -13,18 +13,19 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users/resevations")
+@RequestMapping("/users/reservations")
 public class UserReservationController {
   private final UserReservationService userReservationService;
 
   @PostMapping("/{storeId}/{storeReservationInfoId}")
   public ResponseEntity<StatusResponseDto> requestReservation(@AuthenticationPrincipal
-  UserDetailsImpl userDetails,@PathVariable Long storeId,@PathVariable Long storeReservationInfoId,RequestReservationDto requestReservationDto) {
+  UserDetailsImpl userDetails,@PathVariable Long storeId,@PathVariable Long storeReservationInfoId,@RequestBody RequestReservationDto requestReservationDto) {
     boolean isPossible = userReservationService.requestReservation(userDetails.getUserId(),storeId,storeReservationInfoId,requestReservationDto);
     return isPossible ? RESPONSE_OK : BAD_REQUEST;
   }
