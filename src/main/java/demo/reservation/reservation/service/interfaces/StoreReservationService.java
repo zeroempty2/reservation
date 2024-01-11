@@ -1,5 +1,6 @@
 package demo.reservation.reservation.service.interfaces;
 
+import demo.reservation.reservation.dto.ReservationCompleteDto;
 import demo.reservation.reservation.dto.StoreReservationAddDto;
 import demo.reservation.reservation.dto.StoreReservationInfoRequestDto;
 import demo.reservation.reservation.dto.StoreReservationInfoResponseDto;
@@ -12,4 +13,5 @@ public interface StoreReservationService {
   StoreReservationInfo findStoreReservationInfoById(Long storeReservationInfoId);
   StoreReservationInfo findStoreReservationInfoByYearsAndMonths(Short years,Byte months);
   StoreReservationInfo findById(Long storeReservationInfoId);
+  void completeReservation(ReservationCompleteDto reservationCompleteDto);
 }
