@@ -2,17 +2,13 @@ package demo.reservation.reservation.service;
 
 
 import demo.reservation.reservation.dao.StoreReservationInfoRepository;
-import demo.reservation.reservation.dto.ReservationCompleteDto;
 import demo.reservation.reservation.dto.StoreReservationAddDto;
 import demo.reservation.reservation.dto.StoreReservationInfoRequestDto;
 import demo.reservation.reservation.dto.StoreReservationInfoResponseDto;
 import demo.reservation.reservation.entity.StoreReservationInfo;
-import demo.reservation.reservation.entity.UserReservation;
 import demo.reservation.reservation.service.interfaces.StoreReservationService;
-import demo.reservation.reservation.service.interfaces.UserReservationService;
 import demo.reservation.store.entity.Store;
 import demo.reservation.store.service.interfaces.StoreService;
-import demo.reservation.util.enums.ReservationStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class StoreReservationServiceImpl implements StoreReservationService {
   private final StoreReservationInfoRepository storeReservationInfoRepository;
-  private final UserReservationService userReservationService;
+
   private final StoreService storeService;
 
 
@@ -78,12 +74,6 @@ public class StoreReservationServiceImpl implements StoreReservationService {
     );
   }
 
-  //맞는 점주인지 확인 필요
-  @Override
-  public void completeReservation(ReservationCompleteDto reservationCompleteDto) {
-    UserReservation userReservation = userReservationService.findById(reservationCompleteDto.userReservationId());
-    userReservation.updateUserReservation(ReservationStatus.Completed);
-  }
 
 
 }

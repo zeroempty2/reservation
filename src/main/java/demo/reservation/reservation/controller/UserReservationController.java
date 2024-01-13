@@ -5,6 +5,7 @@ import static demo.reservation.util.HttpResponse.RESPONSE_OK;
 
 import demo.reservation.common.dto.StatusResponseDto;
 import demo.reservation.reservation.dto.RequestReservationDto;
+import demo.reservation.reservation.dto.ReservationCompleteDto;
 import demo.reservation.reservation.service.interfaces.UserReservationService;
 import demo.reservation.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,13 @@ public class UserReservationController {
   public ResponseEntity<StatusResponseDto> cancelReservation(@AuthenticationPrincipal
   UserDetailsImpl userDetails,@PathVariable Long userReservationId) {
      userReservationService.cancelReservation(userDetails.getUserId(),userReservationId);
+    return RESPONSE_OK;
+  }
+  @PutMapping("/complete")
+  public ResponseEntity<StatusResponseDto> completeReservation(@RequestBody
+  ReservationCompleteDto reservationCompleteDto,@AuthenticationPrincipal
+  UserDetailsImpl userDetails) {
+    userReservationService.completeReservation(reservationCompleteDto,userDetails.getUserId());
     return RESPONSE_OK;
   }
 }

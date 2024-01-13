@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import demo.reservation.reservation.dao.UserReservationRepository;
 import demo.reservation.reservation.dto.RequestReservationDto;
+import demo.reservation.reservation.dto.ReservationCompleteDto;
 import demo.reservation.reservation.entity.StoreReservationDayInfo;
 import demo.reservation.reservation.entity.StoreReservationInfo;
 import demo.reservation.reservation.entity.UserReservation;
@@ -78,6 +79,20 @@ public class UserReservationServiceImpl implements UserReservationService {
     return userReservationRepository.findById(userReservationId).orElseThrow(
         () -> new IllegalArgumentException("유효한 id가 아닙니다")
     );
+  }
+
+  @Override
+  public void updateUserReservation(UserReservation userReservation, ReservationStatus reservationStatus) {
+    userReservation.updateUserReservation(reservationStatus);
+  }
+
+  @Override
+  public void completeReservation(ReservationCompleteDto reservationCompleteDto, Long userId) {
+    UserReservation userReservation = findById(reservationCompleteDto.userReservationId());
+    if(!userReservation.getStore().isStoreManager(userId)){
+      throw new IllegalArgumentException("점주가 아닙니다");
+    }
+    updateUserReservation(userReservation,ReservationStatus.Completed);
   }
 
   private String normalizationStoreReservationDayInfos(String storeReservationDayInfos,RequestReservationDto requestReservationDto){

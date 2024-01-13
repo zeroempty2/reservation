@@ -31,8 +31,8 @@ public class TestDataRunner implements ApplicationRunner {
           .username("OWNER1")
           .password(passwordEncoder.encode("Password!23"))
           .build();
-      userRepository.save(user);
-      Store store = new Store();
+      userRepository.saveAndFlush(user);
+      Store store = Store.builder().storeManagerId(user.getId()).build();
       storeRepository.save(store);
     }
 
