@@ -25,26 +25,26 @@ public class StoreReservationInfoRepositoryQueryImpl implements StoreReservation
 
   @Override
   @Transactional
-  public StoreReservationInfo findStoreMonthReservationByStoreIdAndMonth(
+  public Optional<StoreReservationInfo> findStoreMonthReservationByStoreIdAndMonth(
       Long storeId, Short year, Byte month) {
-    return jpaQueryFactory
+    return Optional.ofNullable(jpaQueryFactory
         .select(
             storeReservationInfo
         )
         .from(storeReservationInfo)
         .where(storeReservationInfo.store.id.eq(storeId)
-              ,storeReservationInfo.years.eq(year)
-              ,storeReservationInfo.months.eq(month)
+            , storeReservationInfo.years.eq(year)
+            , storeReservationInfo.months.eq(month)
         )
         .leftJoin(storeReservationInfo.store)
-        .fetchOne();
+        .fetchOne());
   }
 
   @Override
   @Transactional
-  public StoreReservationInfoResponseDto findStoreMonthReservationAndResponse(
+  public Optional<StoreReservationInfoResponseDto> findStoreMonthReservationAndResponse(
       Long storeId, Short year, Byte month) {
-    return jpaQueryFactory
+    return Optional.ofNullable(jpaQueryFactory
         .select(
             Projections.constructor(
                 StoreReservationInfoResponseDto.class
@@ -56,11 +56,11 @@ public class StoreReservationInfoRepositoryQueryImpl implements StoreReservation
         )
         .from(storeReservationInfo)
         .where(storeReservationInfo.store.id.eq(storeId)
-            ,storeReservationInfo.years.eq(year)
-            ,storeReservationInfo.months.eq(month)
+            , storeReservationInfo.years.eq(year)
+            , storeReservationInfo.months.eq(month)
         )
         .leftJoin(storeReservationInfo.store)
-        .fetchOne();
+        .fetchOne());
   }
 
   @Override

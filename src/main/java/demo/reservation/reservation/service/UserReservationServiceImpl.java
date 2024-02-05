@@ -69,7 +69,7 @@ public class UserReservationServiceImpl implements UserReservationService {
       throw new IllegalArgumentException("사용자 정보가 일치하지 않습니다");
     }
     reservation.updateUserReservation(ReservationStatus.Cancelled);
-    StoreReservationInfo storeReservationInfo = storeReservationService.getStoreReservationInfoByStoreIdAndYearsAndMonths(years,months,store.getId());
+    StoreReservationInfo storeReservationInfo = storeReservationService.getStoreReservationInfo(store.getId(),years,months);
     String cancelUpdateReservationDayInfo = normalizationAndCancelStoreReservationDayInfos(storeReservationInfo.getStoreReservationDayInfos(),days,times);
     storeReservationInfo.update(cancelUpdateReservationDayInfo);
   }
