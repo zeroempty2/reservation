@@ -1,8 +1,6 @@
 package demo.reservation.reservation.service;
 
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import demo.reservation.reservation.dao.UserReservationRepository;
 import demo.reservation.reservation.dto.RequestReservationDto;
 import demo.reservation.reservation.dto.ReservationCompleteDto;
@@ -96,9 +94,7 @@ public class UserReservationServiceImpl implements UserReservationService {
   }
 
   private String normalizationStoreReservationDayInfos(String storeReservationDayInfos,RequestReservationDto requestReservationDto){
-    Gson gson = new Gson();
-    //데이터 정규화
-    Set<StoreReservationDayInfo> storeReservationDayInfoSet = gson.fromJson(storeReservationDayInfos, new TypeToken<Set<StoreReservationDayInfo>>() {}.getType());
+    Set<StoreReservationDayInfo> storeReservationDayInfoSet = storeReservationService.normalizationStoreReservation(storeReservationDayInfos);
 
     StoreReservationDayInfo storeReservationDayInfo = storeReservationDayInfoSet.stream()
         .peek(info -> System.out.println("Comparing with: " + info))
@@ -111,13 +107,11 @@ public class UserReservationServiceImpl implements UserReservationService {
     storeReservationDayInfoSet.remove(storeReservationDayInfo);
     storeReservationDayInfo.updateStoreReservationDayInfo();
     storeReservationDayInfoSet.add(storeReservationDayInfo);
-    return gson.toJson(storeReservationDayInfoSet);
+    return storeReservationService.toJsonStoreReservation(storeReservationDayInfoSet);
   }
 
   private String normalizationAndCancelStoreReservationDayInfos(String storeReservationDayInfos,Byte days,String times){
-    Gson gson = new Gson();
-    //데이터 정규화
-    Set<StoreReservationDayInfo> storeReservationDayInfoSet = gson.fromJson(storeReservationDayInfos, new TypeToken<Set<StoreReservationDayInfo>>() {}.getType());
+    Set<StoreReservationDayInfo> storeReservationDayInfoSet = storeReservationService.normalizationStoreReservation(storeReservationDayInfos);
 
     StoreReservationDayInfo foundInfo = storeReservationDayInfoSet.stream()
         .filter(info -> info.getDays().equals(days) && info.getTimes().equals(times))
@@ -129,7 +123,7 @@ public class UserReservationServiceImpl implements UserReservationService {
     storeReservationDayInfoSet.remove(foundInfo);
     foundInfo.cancelUpdateStoreReservationDayInfo();
     storeReservationDayInfoSet.add(foundInfo);
-    return gson.toJson(storeReservationDayInfoSet);
+    return storeReservationService.toJsonStoreReservation(storeReservationDayInfoSet);
   }
 
 }
