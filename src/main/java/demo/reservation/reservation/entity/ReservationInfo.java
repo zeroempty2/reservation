@@ -1,8 +1,7 @@
 package demo.reservation.reservation.entity;
 
-import demo.reservation.store.entity.Store;
+import demo.reservation.reservationItem.entity.ReservationItem;
 import demo.reservation.util.TimeStamped;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,9 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
-public class StoreReservationInfo extends TimeStamped {
+public class ReservationInfo extends TimeStamped {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -37,10 +33,10 @@ public class StoreReservationInfo extends TimeStamped {
   private String storeReservationDayInfos;
 
   @Builder
-  public StoreReservationInfo(Short years, Byte months, Store store,String storeReservationDayInfos) {
+  public ReservationInfo(Short years, Byte months, ReservationItem reservationItem,String storeReservationDayInfos) {
     this.years = years;
     this.months = months;
-    this.store = store;
+    this.reservationItem = reservationItem;
     this.storeReservationDayInfos = storeReservationDayInfos;
   }
 
@@ -51,8 +47,8 @@ public class StoreReservationInfo extends TimeStamped {
 
   //연관관계
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "store_id")
-  private Store store;
+  @JoinColumn(name = "reservationItem_id")
+  private ReservationItem reservationItem;
 
 
 }

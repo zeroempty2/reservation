@@ -1,15 +1,10 @@
 package demo.reservation.store.entity;
 
-import demo.reservation.reservation.entity.StoreReservationInfo;
 import demo.reservation.util.TimeStamped;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,10 +32,10 @@ public class Store extends TimeStamped {
   public boolean isStoreManager(Long userId){
     return this.storeManagerId.equals(userId);
   }
-  
 
-  //연관관계
-  @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
-  private Set<StoreReservationInfo> storeReservationInfos = new LinkedHashSet<>();
+
+//  //연관관계
+//  @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+//  private Set<ReservationInfo> reservationInfos = new LinkedHashSet<>();
 
 }

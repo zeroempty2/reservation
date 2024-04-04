@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class StoreReservationDayInfo {
+public class ReservationDayInfo {
 
   private Byte days;
 
@@ -16,7 +16,7 @@ public class StoreReservationDayInfo {
 
   private Integer capacity;
 
-  public StoreReservationDayInfo(Byte days, String times, Boolean isPossible, Integer capacity) {
+  public ReservationDayInfo(Byte days, String times, Boolean isPossible, Integer capacity) {
     this.days = days;
     this.times = times;
     this.isPossible = isPossible;
@@ -51,9 +51,9 @@ public class StoreReservationDayInfo {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    StoreReservationDayInfo storeReservationDayInfo = (StoreReservationDayInfo) o;
-    return Objects.equals(days, storeReservationDayInfo.days) && Objects.equals(times, storeReservationDayInfo.times) && storeReservationDayInfo.isPossible == isPossible && Objects.equals(
-        storeReservationDayInfo.capacity, capacity);
+    ReservationDayInfo reservationDayInfo = (ReservationDayInfo) o;
+    return Objects.equals(days, reservationDayInfo.days) && Objects.equals(times, reservationDayInfo.times) && reservationDayInfo.isPossible == isPossible && Objects.equals(
+        reservationDayInfo.capacity, capacity);
   }
 
   @Override

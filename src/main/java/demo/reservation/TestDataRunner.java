@@ -1,7 +1,5 @@
 package demo.reservation;
 
-import demo.reservation.mongoDB.MongoDBTestRepository;
-import demo.reservation.mongoDB.MongoTest;
 import demo.reservation.store.dao.StoreRepository;
 import demo.reservation.store.entity.Store;
 import demo.reservation.user.dao.UserRepository;
@@ -23,7 +21,7 @@ public class TestDataRunner implements ApplicationRunner {
   private final UserServiceImpl userService;
   private final PasswordEncoder passwordEncoder;
   private final StoreRepository storeRepository;
-  private final MongoDBTestRepository mongoRepository;
+
 
   @Override
   @Transactional
@@ -37,8 +35,8 @@ public class TestDataRunner implements ApplicationRunner {
       userRepository.saveAndFlush(user);
       Store store = Store.builder().storeManagerId(user.getId()).build();
       storeRepository.save(store);
-    MongoTest mongoTest = new MongoTest("test","test1");
-    mongoRepository.save(mongoTest);
+
+
     }
 
   }
