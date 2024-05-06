@@ -1,6 +1,7 @@
 package demo.reservation.reservationItem.entity;
 
 import demo.reservation.reservation.entity.ReservationInfo;
+import demo.reservation.util.TimeStamped;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-public class ReservationItem {
+public class ReservationItem extends TimeStamped {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
