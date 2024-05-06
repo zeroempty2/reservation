@@ -1,12 +1,15 @@
 package demo.reservation.reservationItem.service;
 
+import demo.reservation.common.dto.PageDto;
 import demo.reservation.reservationItem.dao.ReservationItemRepository;
 import demo.reservation.reservationItem.dto.ReservationItemAddDto;
+import demo.reservation.reservationItem.dto.ReservationItemResponseDto;
 import demo.reservation.reservationItem.entity.ReservationItem;
 import demo.reservation.reservationItem.service.interfaces.ReservationItemService;
 import demo.reservation.user.service.interfaces.UserService;
 import demo.reservation.util.enums.UserRoleEnum;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +27,12 @@ public class ReservationItemServiceImpl implements ReservationItemService {
         .itemName(reservationItemAddDto.itemName())
         .build();
     reservationItemRepository.save(reservationItem);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public Page<ReservationItemResponseDto> getReservationItems(PageDto pageDto) {
+    return reservationItemRepository.getReservationItems(pageDto);
   }
 
 }
