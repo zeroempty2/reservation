@@ -30,19 +30,19 @@ public class ReservationInfo extends TimeStamped {
   private Byte months;
 
   @Column
-  private String storeReservationDayInfos;
+  private String reservationDayInfos;
 
   @Builder
-  public ReservationInfo(Short years, Byte months, ReservationItem reservationItem,String storeReservationDayInfos) {
+  public ReservationInfo(Short years, Byte months, ReservationItem reservationItem,String reservationDayInfos) {
     this.years = years;
     this.months = months;
     this.reservationItem = reservationItem;
-    this.storeReservationDayInfos = storeReservationDayInfos;
+    this.reservationDayInfos = reservationDayInfos;
   }
 
   //메서드
   public void update(String storeReservationDayInfos){
-    this.storeReservationDayInfos = storeReservationDayInfos;
+    this.reservationDayInfos = storeReservationDayInfos;
   }
 
   //연관관계
