@@ -35,4 +35,11 @@ public class ReservationItemServiceImpl implements ReservationItemService {
     return reservationItemRepository.getReservationItems(pageDto);
   }
 
+  @Override
+  public ReservationItem findById(Long reservationItemId) {
+    return reservationItemRepository.findById(reservationItemId).orElseThrow(
+        () -> new IllegalArgumentException("존재하지 않는 정보입니다")
+    );
+  }
+
 }
