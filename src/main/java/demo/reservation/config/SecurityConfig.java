@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -42,9 +43,6 @@ public class SecurityConfig {
     return (web) -> web.ignoring()
         .requestMatchers(new AntPathRequestMatcher("/h2-console/**"))
         .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-//        .requestMatchers(PathRequest.toH2Console())
-//        .requestMatchers("/users/sign");
-
   }
 
   @Bean
@@ -55,22 +53,14 @@ public class SecurityConfig {
         .sessionManagement(session -> session
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         )
-        .authorizeHttpRequests(request -> request
-            .requestMatchers(new AntPathRequestMatcher("/**"))
-            .permitAll()
-            .anyRequest().authenticated());
-//
-//        .requestMatchers(
-//            "/sample"
-//        )
-//        .hasAnyRole("SAMPLE")
-//        )
-//        .authorizeHttpRequests(request -> request.anyRequest().authenticated());
-
-    //401
-    http.exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint));
-    //403
-    http.exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedHandler(customAccessDeniedHandler));
+        .authorizeHttpRequests(authorize -> authorize
+            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            .requestMatchers("/**").permitAll()
+            .anyRequest().authenticated()
+        )  .exceptionHandling(exceptionHandling -> exceptionHandling
+            .authenticationEntryPoint(customAuthenticationEntryPoint) // 인증 실패 시 처리할 핸들러 지정
+            .accessDeniedHandler(customAccessDeniedHandler) // 권한 부족 시 처리할 핸들러 지정
+        );
 
     return http.build();
   }
