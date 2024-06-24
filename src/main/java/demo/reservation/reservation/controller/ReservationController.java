@@ -29,13 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
     private final ReservationService reservationService;
 
     @PostMapping("/{reservationItemId}")
-    public ResponseEntity<StatusResponseDto> addStoreReservationMonthInfo(@RequestBody
+    public ResponseEntity<StatusResponseDto> addReservationMonthInfo(@RequestBody
     ReservationAddDto reservationAddDto,@PathVariable Long reservationItemId) {
       reservationService.addReservationDayInfoMonth(reservationAddDto,reservationItemId);
       return RESPONSE_CREATED;
     }
     @PatchMapping("/{storeId}")
-    public ResponseEntity<StatusResponseDto> updateStoreReservationMonthInfo(@RequestBody
+    public ResponseEntity<StatusResponseDto> updateReservationMonthInfo(@RequestBody
     ReservationAddDto reservationUpdateDto,@PathVariable Long storeId) {
       reservationService.addReservationDayInfoMonth(reservationUpdateDto, storeId);
       return RESPONSE_OK;

@@ -2,6 +2,6 @@ package demo.reservation.util.enums;
 
 public enum ReservationStatus {
   Processing,
-  Cancelled,
+  Canceled,
   Completed
 }

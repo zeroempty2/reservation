@@ -1,6 +1,8 @@
 package demo.reservation.user.entity;
 
+import demo.reservation.reservation.entity.ReservationInfo;
 import demo.reservation.reservation.entity.UserReservation;
+import demo.reservation.reservationItem.entity.ReservationItem;
 import demo.reservation.util.TimeStamped;
 import demo.reservation.util.enums.UserRoleEnum;
 import jakarta.persistence.CascadeType;
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,4 +60,5 @@ public class User extends TimeStamped {
   //연관관계
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<UserReservation> userReservations = new HashSet<>();
+
 }

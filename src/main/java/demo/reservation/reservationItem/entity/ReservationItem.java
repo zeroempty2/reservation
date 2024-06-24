@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -26,11 +27,20 @@ public class ReservationItem extends TimeStamped {
   @Column
   private String itemName;
 
+  @Column
+  private Long ownerId;
+
   @Builder
   public ReservationItem(String itemName){
     this.itemName = itemName;
   }
+
+  //메서드
+  public boolean isItemOwner(Long userId){
+    return userId.equals(ownerId);
+  }
   //연관관계
   @OneToMany(mappedBy = "reservationItem", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<ReservationInfo> reservationInfos = new LinkedHashSet<>();
+
 }
