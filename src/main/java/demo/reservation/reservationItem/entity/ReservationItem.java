@@ -31,8 +31,9 @@ public class ReservationItem extends TimeStamped {
   private Long ownerId;
 
   @Builder
-  public ReservationItem(String itemName){
+  public ReservationItem(String itemName,Long ownerId){
     this.itemName = itemName;
+    this.ownerId = ownerId;
   }
 
   //메서드
