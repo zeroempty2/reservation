@@ -22,9 +22,10 @@ public class ReservationItemServiceImpl implements ReservationItemService {
   @Override
   @Transactional
   public void addReservationItem(ReservationItemAddDto reservationItemAddDto, Long userId) {
-    if(!userService.findById(userId).getRole().equals(UserRoleEnum.MANAGER)) throw new IllegalArgumentException("관리자가 아닙니다");
+    if(!userService.findById(userId).getRole().equals(UserRoleEnum.MANAGER)) throw new IllegalArgumentException("권한이 없습니다");
     ReservationItem reservationItem =  ReservationItem.builder()
         .itemName(reservationItemAddDto.itemName())
+        .ownerId(userId)
         .build();
     reservationItemRepository.save(reservationItem);
   }

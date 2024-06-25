@@ -51,7 +51,7 @@ public class ReservationInfoRepositoryQueryImpl implements ReservationInfoReposi
                 , reservationInfo.id
                 , reservationInfo.years
                 , reservationInfo.months
-                , reservationInfo.storeReservationDayInfos
+                , reservationInfo.reservationDayInfos
             )
         )
         .from(reservationInfo)
