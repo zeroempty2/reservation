@@ -1,5 +1,7 @@
 package demo.reservation.reservationItem.dto;
 
+import demo.reservation.util.enums.ReservationItemCategory;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,5 +10,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ReservationItemResponseDto {
-public String ItemName;
+public String itemName;
+public LocalDateTime createdAt;
+public ReservationItemCategory reservationItemCategory;
+
 }

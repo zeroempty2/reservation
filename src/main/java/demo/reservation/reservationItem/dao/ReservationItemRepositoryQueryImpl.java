@@ -11,6 +11,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import demo.reservation.common.dto.PageDto;
 import demo.reservation.reservationItem.dto.ReservationItemResponseDto;
 import demo.reservation.reservationItem.entity.ReservationItem;
+import demo.reservation.util.enums.ReservationItemCategory;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -27,27 +28,29 @@ public class ReservationItemRepositoryQueryImpl implements ReservationItemReposi
   public Page<ReservationItemResponseDto> getReservationItems(PageDto pageDto) {
     Pageable pageable = pageDto.toPageable();
     List<ReservationItemResponseDto> dtoList;
+    JPAQuery<ReservationItemResponseDto> query = pageDto.getReservationItemCategory() == null ? query() : query(pageDto.getReservationItemCategory());
 
-    if(Objects.nonNull(pageDto.getSortBy())) dtoList = getReservationItemsAndSortByKeyword(pageable, pageDto);
-    else dtoList = sortByCreatedAtDesc(pageable);
+    if(Objects.nonNull(pageDto.getSortBy())) dtoList = getReservationItemsAndSortByKeyword(pageable,pageDto,query);
+    else dtoList = sortByCreatedAtDesc(pageable,query);
 
     long totalSize = storeCountQuery().fetch().get(0);
 
     return PageableExecutionUtils.getPage(dtoList, pageable, () -> totalSize);
   }
-  private List<ReservationItemResponseDto> getReservationItemsAndSortByKeyword(Pageable pageable,PageDto pageDto) {
+
+  private List<ReservationItemResponseDto> getReservationItemsAndSortByKeyword(Pageable pageable,PageDto pageDto,JPAQuery<ReservationItemResponseDto> query) {
     OrderSpecifier<?> orderSpecifier = getOrderSpecifier(pageDto.getSortBy(),
         pageDto.isAsc());
 
-    return query()
+    return query
         .orderBy(orderSpecifier)
         .limit(pageable.getPageSize())
         .offset(pageable.getOffset())
         .fetch();
   }
 
-  private List<ReservationItemResponseDto>sortByCreatedAtDesc(Pageable pageable) {
-    return query()
+  private List<ReservationItemResponseDto>sortByCreatedAtDesc(Pageable pageable,JPAQuery<ReservationItemResponseDto> query) {
+    return query
         .orderBy(reservationItem.createdAt.desc())
         .limit(pageable.getPageSize())
         .offset(pageable.getOffset())
@@ -60,9 +63,26 @@ public class ReservationItemRepositoryQueryImpl implements ReservationItemReposi
             Projections.bean(
                 ReservationItemResponseDto.class
                 , reservationItem.itemName
+                , reservationItem.createdAt
+                , reservationItem.reservationItemCategory
             )
         )
         .from(reservationItem)
+        .setHint("org.hibernate.readOnly", true);
+  }
+
+  private JPAQuery<ReservationItemResponseDto> query(ReservationItemCategory reservationItemCategory){
+    return jpaQueryFactory
+        .select(
+            Projections.bean(
+                ReservationItemResponseDto.class
+                , reservationItem.itemName
+                , reservationItem.createdAt
+                , reservationItem.reservationItemCategory
+            )
+        )
+        .from(reservationItem)
+        .where(reservationItem.reservationItemCategory.eq(reservationItemCategory))
         .setHint("org.hibernate.readOnly", true);
   }
 

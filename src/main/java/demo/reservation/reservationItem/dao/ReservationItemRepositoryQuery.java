@@ -6,4 +6,5 @@ import org.springframework.data.domain.Page;
 
 public interface ReservationItemRepositoryQuery {
   Page<ReservationItemResponseDto> getReservationItems(PageDto pageDto);
+
 }
