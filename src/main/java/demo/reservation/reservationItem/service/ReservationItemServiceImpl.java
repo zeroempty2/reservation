@@ -25,6 +25,7 @@ public class ReservationItemServiceImpl implements ReservationItemService {
     if(!userService.findById(userId).getRole().equals(UserRoleEnum.MANAGER)) throw new IllegalArgumentException("권한이 없습니다");
     ReservationItem reservationItem =  ReservationItem.builder()
         .itemName(reservationItemAddDto.itemName())
+        .reservationItemCategory(reservationItemAddDto.reservationItemCategory())
         .ownerId(userId)
         .build();
     reservationItemRepository.save(reservationItem);

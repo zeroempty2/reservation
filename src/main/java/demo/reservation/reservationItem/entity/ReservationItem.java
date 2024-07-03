@@ -2,6 +2,7 @@ package demo.reservation.reservationItem.entity;
 
 import demo.reservation.reservation.entity.ReservationInfo;
 import demo.reservation.util.TimeStamped;
+import demo.reservation.util.enums.ReservationItemCategory;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,10 +31,14 @@ public class ReservationItem extends TimeStamped {
   @Column
   private Long ownerId;
 
+  @Column
+  private ReservationItemCategory reservationItemCategory;
+
   @Builder
-  public ReservationItem(String itemName,Long ownerId){
+  public ReservationItem(Long id,String itemName,Long ownerId,ReservationItemCategory reservationItemCategory){
     this.itemName = itemName;
     this.ownerId = ownerId;
+    this.reservationItemCategory = reservationItemCategory;
   }
 
   //메서드

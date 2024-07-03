@@ -1,5 +1,6 @@
 package demo.reservation.common.dto;
 
+import demo.reservation.util.enums.ReservationItemCategory;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,8 @@ public class PageDto {
   boolean isAsc;
 
   String sortBy;
+
+  ReservationItemCategory reservationItemCategory;
 
   public Pageable toPageable() {
     if(Objects.nonNull(sortBy)){
