@@ -6,11 +6,14 @@ import static demo.reservation.util.HttpResponse.RESPONSE_OK;
 import demo.reservation.common.dto.StatusResponseDto;
 import demo.reservation.reservation.dto.RequestReservationDto;
 import demo.reservation.reservation.dto.ReservationCompleteDto;
+import demo.reservation.reservation.dto.UserReservationResponseDto;
 import demo.reservation.reservation.service.interfaces.UserReservationService;
 import demo.reservation.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,7 +33,10 @@ public class UserReservationController {
     boolean isPossible = userReservationService.requestReservation(userDetails.getUserId(),storeId,storeReservationInfoId,requestReservationDto);
     return isPossible ? RESPONSE_OK : BAD_REQUEST;
   }
-
+  @GetMapping("/reservations")
+  public ResponseEntity<Page<UserReservationResponseDto>> getUserReservations(@AuthenticationPrincipal UserDetailsImpl userDetails){
+    return 
+  }
   @PutMapping("/cancel/{userReservationId}")
   public ResponseEntity<StatusResponseDto> cancelReservation(@AuthenticationPrincipal
   UserDetailsImpl userDetails,@PathVariable Long userReservationId) {
