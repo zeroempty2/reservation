@@ -4,7 +4,7 @@ import demo.reservation.reservation.entity.UserReservation;
 import java.util.Optional;
 import org.springframework.data.repository.Repository;
 
-public interface UserReservationRepository extends Repository<UserReservation,Long>{
+public interface UserReservationRepository extends Repository<UserReservation,Long>,UserReservationRepositoryQuery{
   void save(UserReservation userReservation);
   Optional<UserReservation> findById(Long userReservationId);
 }

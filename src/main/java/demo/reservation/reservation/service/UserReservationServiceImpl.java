@@ -1,9 +1,11 @@
 package demo.reservation.reservation.service;
 
 
+import demo.reservation.common.dto.PageDto;
 import demo.reservation.reservation.dao.UserReservationRepository;
 import demo.reservation.reservation.dto.RequestReservationDto;
 import demo.reservation.reservation.dto.ReservationCompleteDto;
+import demo.reservation.reservation.dto.UserReservationResponseDto;
 import demo.reservation.reservation.entity.ReservationDayInfo;
 import demo.reservation.reservation.entity.ReservationInfo;
 import demo.reservation.reservation.entity.UserReservation;
@@ -18,6 +20,7 @@ import demo.reservation.util.enums.ReservationStatus;
 import java.util.Objects;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -104,6 +107,11 @@ public class UserReservationServiceImpl implements UserReservationService {
     }
 
     updateUserReservation(userReservation,ReservationStatus.Completed);
+  }
+
+  @Override
+  public Page<UserReservationResponseDto> getUserReservations(Long userId, PageDto pageDto) {
+    return userReservationRepository.findUserReservationByUserId(userId,pageDto);
   }
 
   private String updateReservationDayInfos(String reservationDayInfos,RequestReservationDto requestReservationDto){

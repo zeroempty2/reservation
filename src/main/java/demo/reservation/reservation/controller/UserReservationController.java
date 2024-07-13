@@ -3,14 +3,18 @@ package demo.reservation.reservation.controller;
 import static demo.reservation.util.HttpResponse.BAD_REQUEST;
 import static demo.reservation.util.HttpResponse.RESPONSE_OK;
 
+import demo.reservation.common.dto.PageDto;
 import demo.reservation.common.dto.StatusResponseDto;
 import demo.reservation.reservation.dto.RequestReservationDto;
 import demo.reservation.reservation.dto.ReservationCompleteDto;
 import demo.reservation.reservation.dto.UserReservationResponseDto;
 import demo.reservation.reservation.service.interfaces.UserReservationService;
 import demo.reservation.security.UserDetailsImpl;
+import java.nio.charset.StandardCharsets;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +38,12 @@ public class UserReservationController {
     return isPossible ? RESPONSE_OK : BAD_REQUEST;
   }
   @GetMapping("/reservations")
-  public ResponseEntity<Page<UserReservationResponseDto>> getUserReservations(@AuthenticationPrincipal UserDetailsImpl userDetails){
-    return 
+  public ResponseEntity<Page<UserReservationResponseDto>> getUserReservations(PageDto pageDto,@AuthenticationPrincipal UserDetailsImpl userDetails){
+    Page<UserReservationResponseDto> dtoList = userReservationService.getUserReservations(userDetails.getUserId(),pageDto);
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
+    return ResponseEntity.ok().headers(headers).body(dtoList);
+
   }
   @PutMapping("/cancel/{userReservationId}")
   public ResponseEntity<StatusResponseDto> cancelReservation(@AuthenticationPrincipal

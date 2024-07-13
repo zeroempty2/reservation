@@ -2,6 +2,7 @@ package demo.reservation.reservation.entity;
 
 
 import demo.reservation.user.entity.User;
+import demo.reservation.util.TimeStamped;
 import demo.reservation.util.enums.ReservationStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
-public class UserReservation {
+public class UserReservation extends TimeStamped {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
